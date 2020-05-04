@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CryEngine.Projects.Game</RootNamespace>
-    <AssemblyName>Managers</AssemblyName>
+    <AssemblyName>Logic</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <UseMSBuildEngine>false</UseMSBuildEngine>
@@ -59,7 +59,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MainManager.cs" />
+    <Compile Include="Helpers\UiHelper.cs" />
+    <Compile Include="Logic\KeyControl\ControlEvents.cs" />
+    <Compile Include="Logic\Monitoring\BuildVersionUiLogic.cs" />
+    <Compile Include="Logic\Monitoring\FpsUiLogic.cs" />
+    <Compile Include="Logic\Monitoring\IMonitoringUiLogic.cs" />
+    <Compile Include="Managers\IManager.cs" />
+    <Compile Include="Managers\KeyControlManager.cs" />
+    <Compile Include="Managers\MonitoringManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -2,7 +2,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2003
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Managers", "Managers\Managers.csproj", "{B2338AF2-3DC5-4C37-9AE7-9D4C6DD320CB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logic", "Logic\Logic.csproj", "{B2338AF2-3DC5-4C37-9AE7-9D4C6DD320CB}"
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "VersionIncrementor", "VersionIncrementor\VersionIncrementor.fsproj", "{97DA58C2-5506-410A-9B80-63F3C2D9EB40}"
 EndProject
