@@ -21,6 +21,7 @@ namespace CryEngine.Projects.Game.Managers
             
             Input.OnKey += _controlEvents.ChangeUiActive;
             Input.OnKey += _controlEvents.ChangeMouseVisible;
+            Input.OnKey += _controlEvents.CameraMovement;
         }
 
         public void Shutdown()
@@ -35,8 +36,8 @@ namespace CryEngine.Projects.Game.Managers
                 return;
 
             Input.OnKey -= _instance._controlEvents.ChangeUiActive;
-            Input.OnKey -= _controlEvents.ChangeMouseVisible;
-
+            Input.OnKey -= _instance._controlEvents.ChangeMouseVisible;
+            Input.OnKey -= _instance._controlEvents.CameraMovement;
         }
     }
 }

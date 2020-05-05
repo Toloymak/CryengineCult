@@ -59,6 +59,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Handlers\Control\CameraHandler.cs" />
     <Compile Include="Handlers\Control\ControlEvents.cs" />
     <Compile Include="Helpers\LoggerHelper.cs" />
     <Compile Include="Helpers\UiHelper.cs" />

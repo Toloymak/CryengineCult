@@ -48,6 +48,7 @@ namespace CryEngine.Game.Helpers
             LabelList.Remove(labelName);
         }
 
+        // todo : move to handler
         public void ChangeActive(string labelName)
         {
             LabelList[labelName].Active = !LabelList[labelName].Active;
