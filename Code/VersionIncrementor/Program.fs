@@ -9,7 +9,7 @@ let fileName = "Properties\AssemblyInfo.cs"
 let baseFolder :string = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName
 let fileName = "TestFile.txt"
 #endif
-    
+
 let getFullPath = Path.Combine(baseFolder, fileName)
 
 let regexPattern = "(?<=(AssemblyVersion(\(\"))(((\d)\.){2}))" + "(.*)" + "(?=(.(\d)\"\)]))"
@@ -34,5 +34,5 @@ let printBuildVersion (fileContent : string) =
 let main argv =
     let newContent = replaceBuildVersion (getFile)
     saveFile (newContent)
-    printBuildVersion (getFile)
+    printBuildVersion (newContent)
     0
