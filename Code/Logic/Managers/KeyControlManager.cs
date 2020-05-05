@@ -14,7 +14,7 @@ namespace CryEngine.Projects.Game.Managers
         {
             if(_instance != null)
                 return;
-            
+
             _instance = this;
             
             _controlEvents = new ControlEvents();

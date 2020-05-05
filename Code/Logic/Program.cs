@@ -31,7 +31,8 @@ namespace CryEngine.Game
 			new List<IManager>()
 			{
 				new MonitoringManager(),
-				new KeyControlManager()
+				new KeyControlManager(),
+				new CameraManager()
 			};
 	}
 }

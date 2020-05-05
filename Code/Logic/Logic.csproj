@@ -59,6 +59,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Handlers\CameraHandler.cs" />
     <Compile Include="Handlers\Control\CameraHandler.cs" />
     <Compile Include="Handlers\Control\ControlEvents.cs" />
     <Compile Include="Helpers\LoggerHelper.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="Handlers\Monitoring\FpsUiHandler.cs" />
     <Compile Include="Handlers\Monitoring\IMonitoringUiHandler.cs" />
     <Compile Include="Handlers\Control\MouseVisibleHandler.cs" />
+    <Compile Include="Managers\CameraManager.cs" />
     <Compile Include="Managers\IManager.cs" />
     <Compile Include="Managers\KeyControlManager.cs" />
     <Compile Include="Managers\MonitoringManager.cs" />
