@@ -1,19 +1,8 @@
-<AssetMetadata version="0" type="Level" guid="9c0fe45e-a2ad-61b9-e4a8-7409372d09f4" source="" timestamp="1550743048">
+<AssetMetadata version="0" type="Level" guid="9c0fe45e-a2ad-61b9-e4a8-7409372d09f4" source="" timestamp="1588594918">
  <Files>
   <File path="example/example.level"/>
  </Files>
  <Dependencies>
-  <Path>%editor%/crydesigner_timeofday.xml</Path>
-  <Path>%editor%/default_time_of_day.xml</Path>
-  <Path>%editor%/leveltemplates.xml</Path>
-  <Path>%editor%/mapscreenshotsettings.xml</Path>
-  <Path>%editor%/mbttemplates.xml</Path>
-  <Path>%editor%/modellingpanel.xml</Path>
-  <Path>%editor%/objecttemplates.xml</Path>
-  <Path>%editor%/propertyenumerations.xml</Path>
-  <Path>%editor%/soundtemplates.xml</Path>
-  <Path>%editor%/toolbox.xml</Path>
-  <Path>%editor%/usertools.xml</Path>
   <Path>%engine%/engineassets/icons/averagememoryusage.dds</Path>
   <Path>%engine%/engineassets/icons/highmemoryusage.dds</Path>
   <Path>%engine%/engineassets/icons/livepreview.dds</Path>
@@ -25,11 +14,11 @@
   <Path>%engine%/engineassets/materials/fog/oceanoutof.mtl</Path>
   <Path>%engine%/engineassets/materials/fog/oceanoutoflowspec.mtl</Path>
   <Path>%engine%/engineassets/materials/material_terrain_default.mtl</Path>
-  <Path>%engine%/engineassets/materials/sky/sky.mtl</Path>
   <Path>%engine%/engineassets/materials/water/ocean_default.mtl</Path>
   <Path>%engine%/engineassets/materials/water/wateroceanbottom.mtl</Path>
   <Path>%engine%/engineassets/texturemsg/defaultnouvs.dds</Path>
   <Path>%engine%/engineassets/textures/grey.dds</Path>
   <Path>%engine%/engineassets/textures/skys/night/half_moon.dds</Path>
+  <Path usageCount="1">libs/environmentpresets/levels/example.env</Path>
  </Dependencies>
 </AssetMetadata>
