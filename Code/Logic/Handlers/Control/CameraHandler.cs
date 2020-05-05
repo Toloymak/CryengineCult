@@ -30,7 +30,9 @@ namespace CryEngine.Projects.Game.Handlers.Control
 
         private static Vector3 GetForwardSpeed()
         {
-            return Camera.ForwardDirection * CameraSpeed * FrameTime.Delta;
+           var cameraDirection = Camera.ForwardDirection * CameraSpeed * FrameTime.Delta;
+           cameraDirection.Z = 0;
+           return cameraDirection;
         }
         
         private static Vector3 GetSideSpeed()
