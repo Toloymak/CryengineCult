@@ -8,16 +8,16 @@ namespace CryEngine.Projects.Game.Managers
 	{
 		private static MonitoringManager _instance;
 
-		private FpsUiLogic _fpsUiLogic;
-		private BuildVersionUiLogic _buildVersionUiLogic;
+		private FpsUiHandler _fpsUiHandler;
+		private BuildVersionUiHandler _buildVersionUiHandler;
 
 		public void Initialize()
 		{
 			if(_instance != null || Engine.IsDedicatedServer)
 				return;
 			
-			_fpsUiLogic = new FpsUiLogic();
-			_buildVersionUiLogic = new BuildVersionUiLogic();
+			_fpsUiHandler = new FpsUiHandler();
+			_buildVersionUiHandler = new BuildVersionUiHandler();
 			
 
 			Engine.EngineUnloading += DestroyUi;
@@ -35,20 +35,20 @@ namespace CryEngine.Projects.Game.Managers
 
 		public virtual void OnUpdate()
 		{
-			_fpsUiLogic.UpdateOnCanvas();
-			_buildVersionUiLogic.UpdateOnCanvas();
+			_fpsUiHandler.UpdateOnCanvas();
+			_buildVersionUiHandler.UpdateOnCanvas();
 		}
 
 		private void CreateUi()
 		{
-			_fpsUiLogic.CreateOnCanvas();
-			_buildVersionUiLogic.CreateOnCanvas();
+			_fpsUiHandler.CreateOnCanvas();
+			_buildVersionUiHandler.CreateOnCanvas();
 		}
 
 		private void DestroyUi()
 		{
-			_fpsUiLogic.DestroyOnCanvas();
-			_buildVersionUiLogic.DestroyOnCanvas();
+			_fpsUiHandler.DestroyOnCanvas();
+			_buildVersionUiHandler.DestroyOnCanvas();
 		}
 
 		public void Dispose()

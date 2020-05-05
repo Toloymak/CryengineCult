@@ -5121,27 +5121,28 @@
 			"dependencies": [ ]
 		},
 		{
+			"type": "CSharpScript",
+			"guid": "aae1ca0f-c285-ba92-ed02-b2652d9e633c",
+			"name": "testcomponent",
+			"timestamp": 1588662184,
+			"files": [ "code/testcomponent.cs" ],
+			"workFiles": [ ],
+			"source": "",
+			"metadata": "code/testcomponent.cs.cryasset",
+			"details": [ ],
+			"dependencies": [ ]
+		},
+		{
 			"type": "Level",
 			"guid": "9c0fe45e-a2ad-61b9-e4a8-7409372d09f4",
 			"name": "example",
-			"timestamp": 1587893564,
+			"timestamp": 1588594918,
 			"files": [ "levels/example/example.level" ],
 			"workFiles": [ ],
 			"source": "",
 			"metadata": "levels/example.level.cryasset",
 			"details": [ ],
 			"dependencies": [
-				{ "path": "%editor%/crydesigner_timeofday.xml", "usageCount": 0 },
-				{ "path": "%editor%/default_time_of_day.xml", "usageCount": 0 },
-				{ "path": "%editor%/leveltemplates.xml", "usageCount": 0 },
-				{ "path": "%editor%/mapscreenshotsettings.xml", "usageCount": 0 },
-				{ "path": "%editor%/mbttemplates.xml", "usageCount": 0 },
-				{ "path": "%editor%/modellingpanel.xml", "usageCount": 0 },
-				{ "path": "%editor%/objecttemplates.xml", "usageCount": 0 },
-				{ "path": "%editor%/propertyenumerations.xml", "usageCount": 0 },
-				{ "path": "%editor%/soundtemplates.xml", "usageCount": 0 },
-				{ "path": "%editor%/toolbox.xml", "usageCount": 0 },
-				{ "path": "%editor%/usertools.xml", "usageCount": 0 },
 				{
 					"path": "%engine%/engineassets/icons/averagememoryusage.dds",
 					"usageCount": 0
@@ -5187,10 +5188,6 @@
 					"usageCount": 0
 				},
 				{
-					"path": "%engine%/engineassets/materials/sky/sky.mtl",
-					"usageCount": 0
-				},
-				{
 					"path": "%engine%/engineassets/materials/water/ocean_default.mtl",
 					"usageCount": 0
 				},
@@ -5206,6 +5203,10 @@
 				{
 					"path": "%engine%/engineassets/textures/skys/night/half_moon.dds",
 					"usageCount": 0
+				},
+				{
+					"path": "libs/environmentpresets/levels/example.env",
+					"usageCount": 1
 				}
 			]
 		},

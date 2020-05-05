@@ -59,16 +59,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Handlers\Control\ControlEvents.cs" />
+    <Compile Include="Helpers\LoggerHelper.cs" />
     <Compile Include="Helpers\UiHelper.cs" />
-    <Compile Include="Logic\KeyControl\ControlEvents.cs" />
-    <Compile Include="Logic\Monitoring\BuildVersionUiLogic.cs" />
-    <Compile Include="Logic\Monitoring\FpsUiLogic.cs" />
-    <Compile Include="Logic\Monitoring\IMonitoringUiLogic.cs" />
+    <Compile Include="Handlers\Monitoring\BuildVersionUiHandler.cs" />
+    <Compile Include="Handlers\Monitoring\FpsUiHandler.cs" />
+    <Compile Include="Handlers\Monitoring\IMonitoringUiHandler.cs" />
+    <Compile Include="Handlers\Control\MouseVisibleHandler.cs" />
     <Compile Include="Managers\IManager.cs" />
     <Compile Include="Managers\KeyControlManager.cs" />
     <Compile Include="Managers\MonitoringManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Storage\ControlMap.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="BeforeBuild">

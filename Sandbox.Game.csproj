@@ -52,14 +52,14 @@
       <HintPath>C:\Program Files (x86)\Crytek\CRYENGINE Launcher\Crytek\CRYENGINE_5.6\bin\win_x64\\CryEngine.Core.UI.dll</HintPath>
       <Private>False</Private>
     </Reference>
-        <Reference Include="Game">
-      <HintPath>bin/Game.dll</HintPath>
+        <Reference Include="Logic">
+      <HintPath>bin/Logic.dll</HintPath>
       <Private>False</Private>
     </Reference>
 
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="assets\code\testscript.cs" />
+    <Compile Include="assets\code\testcomponent.cs" />
 
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

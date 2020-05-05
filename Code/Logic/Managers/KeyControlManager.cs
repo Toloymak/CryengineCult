@@ -1,6 +1,6 @@
 ﻿using System;
 using CryEngine.Game.Helpers;
-using CryEngine.Game.Logic.KeyControl;
+using CryEngine.Projects.Game.Handlers.Control;
 
 namespace CryEngine.Projects.Game.Managers
 {
@@ -20,6 +20,7 @@ namespace CryEngine.Projects.Game.Managers
             _controlEvents = new ControlEvents();
             
             Input.OnKey += _controlEvents.ChangeUiActive;
+            Input.OnKey += _controlEvents.ChangeMouseVisible;
         }
 
         public void Shutdown()
@@ -34,6 +35,8 @@ namespace CryEngine.Projects.Game.Managers
                 return;
 
             Input.OnKey -= _instance._controlEvents.ChangeUiActive;
+            Input.OnKey -= _controlEvents.ChangeMouseVisible;
+
         }
     }
 }

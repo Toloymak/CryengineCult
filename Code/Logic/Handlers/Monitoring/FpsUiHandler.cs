@@ -3,7 +3,7 @@ using CryEngine.Game.Helpers;
 
 namespace CryEngine.Game.Logic.Monitoring
 {
-    public class FpsUiLogic : IMonitoringUiLogic
+    public class FpsUiHandler : IMonitoringUiHandler
     {
         private UiHelper _uiHelper;
         
@@ -12,7 +12,7 @@ namespace CryEngine.Game.Logic.Monitoring
         private DateTime _updateFpsTime = DateTime.MinValue;
         private int _frameCount = 0;
 
-        public FpsUiLogic()
+        public FpsUiHandler()
         {
             _uiHelper = new UiHelper();
         }

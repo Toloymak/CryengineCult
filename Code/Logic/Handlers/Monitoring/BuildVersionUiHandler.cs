@@ -2,13 +2,13 @@
 
 namespace CryEngine.Game.Logic.Monitoring
 {
-    public class BuildVersionUiLogic : IMonitoringUiLogic
+    public class BuildVersionUiHandler : IMonitoringUiHandler
     {
         private UiHelper _uiHelper;
         
         private const string BuildVersionLabelName = "build";
 
-        public BuildVersionUiLogic()
+        public BuildVersionUiHandler()
         {
             _uiHelper = new UiHelper();
         }

@@ -1,6 +1,6 @@
 ﻿namespace CryEngine.Game.Logic.Monitoring
 {
-    public interface IMonitoringUiLogic
+    public interface IMonitoringUiHandler
     {
         void UpdateOnCanvas();
         void CreateOnCanvas();
