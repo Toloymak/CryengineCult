@@ -11,6 +11,7 @@ namespace CryEngine.Game
 		/// </summary>
 		protected override void OnGameplayStart()
 		{
+			
 		}
 
 		/// <summary>
@@ -19,7 +20,8 @@ namespace CryEngine.Game
 		/// <param name="frameTime">The time difference between this and the previous frame.</param>
 		protected override void OnUpdate(float frameTime)
 		{
-			
 		}
+		
+
 	}
 }

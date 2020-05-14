@@ -59,7 +59,16 @@
 
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="assets\code\Game.cs" />
+    <Compile Include="assets\code\Program.cs" />
     <Compile Include="assets\code\testcomponent.cs" />
+    <Compile Include="assets\code\EntityComponents\Animations\DefaultCharacterAnimator.cs" />
+    <Compile Include="assets\code\EntityComponents\Player\Player.cs" />
+    <Compile Include="assets\code\EntityComponents\Player\PlayerAnimations.cs" />
+    <Compile Include="assets\code\EntityComponents\Player\PlayerView.cs" />
+    <Compile Include="assets\code\Weapons\BaseWeapon.cs" />
+    <Compile Include="assets\code\Weapons\Bullet.cs" />
+    <Compile Include="assets\code\Weapons\Rifle.cs" />
 
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

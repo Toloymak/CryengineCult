@@ -351,3 +351,5 @@ MigrationBackup/
 /user/shaders/cache/*
 *.bak
 *.bak2
+/.idea/*
+/editor/*
