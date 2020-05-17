@@ -8,7 +8,6 @@ namespace CryEngine.Game
 	{
 		private readonly Player _player;
 		private readonly Entity _cameraPivot;
-		private float _aimProgress = 0;
 
 		public PlayerView(Player player)
 		{
@@ -28,7 +27,7 @@ namespace CryEngine.Game
 			float pitchSpeed = _player.RotationSpeedPitch;
 			float pitchMin = _player.RotationLimitsMinPitch;
 			float pitchMax = _player.RotationLimitsMaxPitch;
-			float eyeHeight = _player.EyeHeight;
+			float eyeHeight = _player.Height;
 
 			//Invert the rotation to have proper third-person camera-control.
 			rotationDelta = -rotationDelta;
@@ -44,43 +43,8 @@ namespace CryEngine.Game
 
 			rotation.YawPitchRoll = ypr;
 			_cameraPivot.Rotation = rotation;
-
-			Vector3 aimOffset;
-			float viewDistance;
-			UpdateAimingPosition(frameTime, out aimOffset, out viewDistance);
 			
 			return rotation;
-		}
-
-		private void UpdateAimingPosition(float frameTime, out Vector3 aimOffset, out float viewDistance)
-		{
-			aimOffset = Vector3.Zero;
-			viewDistance = _player.CameraDistanceOffset;
-
-			var aimSpeed = _player.AimSpeed;
-			if(aimSpeed > 0.0f)
-			{
-				aimSpeed = 1.0f / aimSpeed;
-			}
-			else
-			{
-				//This makes the aim instant.
-				aimSpeed = 100000f;
-			}
-
-			if(_player.IsAiming)
-			{
-				_aimProgress += aimSpeed * frameTime;
-				_aimProgress = MathHelpers.Clamp01(_aimProgress);
-			}
-			else
-			{
-				_aimProgress -= aimSpeed * frameTime;
-				_aimProgress = MathHelpers.Clamp01(_aimProgress);
-			}
-
-			aimOffset += Vector3.Lerp(Vector3.Zero, Vector3.Right * _player.AimingCameraHorizontalOffset, _aimProgress);
-			viewDistance = MathHelpers.Lerp(_player.CameraDistanceOffset, _player.AimingCameraDistanceOffset, _aimProgress);
 		}
 
 		public void Deinitialize()

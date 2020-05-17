@@ -52,8 +52,20 @@
       <HintPath>C:\Program Files (x86)\Crytek\CRYENGINE Launcher\Crytek\CRYENGINE_5.6\bin\win_x64\\CryEngine.Core.UI.dll</HintPath>
       <Private>False</Private>
     </Reference>
-        <Reference Include="Logic">
+        <Reference Include="ManagersPlugin">
+      <HintPath>bin/ManagersPlugin.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Resources">
+      <HintPath>bin/Resources.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Logic">
       <HintPath>bin/Logic.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Managers">
+      <HintPath>bin/Managers.dll</HintPath>
       <Private>False</Private>
     </Reference>
 
@@ -62,10 +74,13 @@
     <Compile Include="assets\code\Game.cs" />
     <Compile Include="assets\code\Program.cs" />
     <Compile Include="assets\code\testcomponent.cs" />
+    <Compile Include="assets\code\WorldStorage.cs" />
     <Compile Include="assets\code\EntityComponents\Animations\DefaultCharacterAnimator.cs" />
     <Compile Include="assets\code\EntityComponents\Player\Player.cs" />
+    <Compile Include="assets\code\EntityComponents\Player\PlayerActionHandler.cs" />
     <Compile Include="assets\code\EntityComponents\Player\PlayerAnimations.cs" />
     <Compile Include="assets\code\EntityComponents\Player\PlayerView.cs" />
+    <Compile Include="assets\code\Intefaces\IUnit.cs" />
     <Compile Include="assets\code\Weapons\BaseWeapon.cs" />
     <Compile Include="assets\code\Weapons\Bullet.cs" />
     <Compile Include="assets\code\Weapons\Rifle.cs" />

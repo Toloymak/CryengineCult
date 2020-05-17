@@ -15,7 +15,10 @@
 			{ "guid": "", "type": "EType::Native", "path": "CryDefaultEntities" },
 			{ "guid": "", "type": "EType::Native", "path": "CrySensorSystem" },
 			{ "guid": "", "type": "EType::Native", "path": "CryPerceptionSystem" },
+			{ "guid": "", "type": "EType::Managed", "path": "bin/ManagersPlugin.dll" },
+			{ "guid": "", "type": "EType::Managed", "path": "bin/Resources.dll" },
 			{ "guid": "", "type": "EType::Managed", "path": "bin/Logic.dll" },
+			{ "guid": "", "type": "EType::Managed", "path": "bin/Managers.dll" },
 			{
 				"guid": "",
 				"type": "EType::Native",

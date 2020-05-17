@@ -1,12 +1,15 @@
 ﻿// Copyright 2001-2016 Crytek GmbH / Crytek Group. All rights reserved.
 
 using System.Diagnostics;
+using CryEngine.Game.Helpers;
+using CryEngine.Game.Intefaces;
 using CryEngine.Game.Weapons;
+using CryEngine.Projects.Game.Storage;
 
 namespace CryEngine.Game
 {
 	[EntityComponent(Guid = "2d0518e2-022a-a22f-4195-62c7eb1be031")]
-	public class Player : EntityComponent
+	public class Player : EntityComponent, IUnit
 	{
 		public enum GeometrySlots
 		{
@@ -14,29 +17,27 @@ namespace CryEngine.Game
 		}
 
 		private const string PlayerGeometryUrl = "Objects/Characters/SampleCharacter/thirdperson.cdf";
-		private const string InputActionMapUrl = "Libs/config/defaultprofile.xml";
-		private const string InputActionMapName = "player";
+
+		public Vector2 Movement = Vector2.Zero;
+		public Vector2 RotationMovement = Vector2.Zero;
 
 		[SerializeValue]
 		private float _mass = 90.0f;
 		[SerializeValue]
-		private float _eyeHeight = 0.935f;
+		private float _height = 0.935f;
 		[SerializeValue]
 		private float _airResistance = 0.0f;
 
 		// The ActionHandler is marked as SerializeValue so the old reference to the ActionHandler can be disposed after a reload.
 		[SerializeValue]
-		private ActionHandler _actionHandler;
-		[SerializeValue]
 		private DefaultCharacterAnimator _animator;
 
 		private PlayerView _playerView;
 		private PlayerAnimations _animations;
-		private Vector2 _movement = Vector2.Zero;
-		private Vector2 _rotationMovement = Vector2.Zero;
+
+		private PlayerActionHandler _playerActionHandler;
 
 		public BaseWeapon Weapon { get; private set; }
-		public bool IsAiming { get; private set; }
 
 		/// <summary>
 		/// Mass of the player entity in kg.
@@ -76,15 +77,15 @@ namespace CryEngine.Game
 		/// The eye-height of the player.
 		/// </summary>
 		[EntityProperty(EntityPropertyType.Primitive, "The eye-height of the player.")]
-		public float EyeHeight
+		public float Height
 		{
 			get
 			{
-				return _eyeHeight;
+				return _height;
 			}
 			set
 			{
-				_eyeHeight = value;
+				_height = value;
 				Physicalize();
 			}
 		}
@@ -124,50 +125,11 @@ namespace CryEngine.Game
 		[EntityProperty(EntityPropertyType.Primitive, "Maximum entity pitch limit")]
 		public float RotationLimitsMaxPitch { get; set; } = 1.5f;
 
-		/// <summary>
-		/// Determines the distance between player and camera.
-		/// </summary>
-		/// <value>The view distance.</value>
-		[EntityProperty(EntityPropertyType.Primitive, "Determines the distance between player and camera.")]
-		public float CameraDistanceOffset { get; set; } = 1.5f;
-
-		/// <summary>
-		/// Determines the height offset of the camera from the player's pivot position.
-		/// </summary>
-		/// <value>The view distance.</value>
-		[EntityProperty(EntityPropertyType.Primitive, "Determines the height offset of the camera from the player's pivot position.")]
-		public float CameraHeightOffset { get; set; } = 2f;
-
-		/// <summary>
-		/// Determines the distance between player and camera while aiming the weapon.
-		/// </summary>
-		/// <value>The view distance while aiming.</value>
-		[EntityProperty(EntityPropertyType.Primitive, "Determines the distance between player and camera while aiming the weapon.")]
-		public float AimingCameraDistanceOffset { get; set; } = 0.5f;
-
-		/// <summary>
-		/// Determines the distance between player and camera while aiming the weapon.
-		/// </summary>
-		/// <value>The view distance while aiming.</value>
-		[EntityProperty(EntityPropertyType.Primitive, "Determines the distance between player and camera while aiming the weapon.")]
-		public float AimingCameraHorizontalOffset { get; set; } = 0.5f;
-
-		/// <summary>
-		/// The speed at which the player can switch to aiming the weapon in seconds.
-		/// </summary>
-		/// <value>The aim speed.</value>
-		[EntityProperty(EntityPropertyType.Primitive, "The speed at which the player can switch to aiming the weapon in seconds.")]
-		public float AimSpeed { get; set; } = 0.15f;
-
-		/// <summary>
-		/// Inverses the vertical rotation of the camera.
-		/// </summary>
-		[EntityProperty(EntityPropertyType.Primitive, "Inverses the vertical rotation of the camera.")]
-		public bool InverseVerticalRotation { get; set; } = false;
-
 		protected override void OnInitialize()
 		{
 			base.OnInitialize();
+
+			WorldStorage.Player = this;
 			
 			//Add the required components first.
 			_animator = Entity.GetOrCreateComponent<DefaultCharacterAnimator>();
@@ -182,6 +144,10 @@ namespace CryEngine.Game
 		{
 			base.OnGameplayStart();
 
+			if (WorldStorage.Player == null)
+			{
+				WorldStorage.Player = this;
+			}
 
 			// Make sure we didn't lose the reference to the component when the Sandbox jumped in and out of game-mode.
 			if(_animator == null)
@@ -205,7 +171,7 @@ namespace CryEngine.Game
 		protected override void OnRemove()
 		{
 			base.OnRemove();
-			_actionHandler?.Dispose();
+			_playerActionHandler?.Dispose();
 		}
 
 		protected override void OnEditorGameModeChange(bool enterGame)
@@ -221,165 +187,16 @@ namespace CryEngine.Game
 
 		private void InitializeInput()
 		{
-			_actionHandler?.Dispose();
-			_actionHandler = new ActionHandler(InputActionMapUrl, InputActionMapName);
-
-			//Movement
-			_actionHandler.AddHandler("moveforward", OnMoveForward);
-			_actionHandler.AddHandler("moveback", OnMoveBack);
-			_actionHandler.AddHandler("moveright", OnMoveRight);
-			_actionHandler.AddHandler("moveleft", OnMoveLeft);
-
-			//Mouse movement
-			_actionHandler.AddHandler("mouse_rotateyaw", OnMoveMouseX);
-			_actionHandler.AddHandler("mouse_rotatepitch", OnMoveMouseY);
-
-			//Actions
-			_actionHandler.AddHandler("shoot", OnFireWeaponPressed);
-			_actionHandler.AddHandler("aim", OnAimWeaponPressed);
-		}
-
-		private void OnMoveForward(string name, InputState state, float value)
-		{
-			if(state == InputState.Pressed)
-			{
-				_movement.Y = 1.0f;
-			}
-			else if(state == InputState.Released)
-			{
-				//The movement only needs to be stopped when the player is still moving forward.
-				if(_movement.Y > 0.0f)
-				{
-					_movement.Y = 0.0f;
-				}
-			}
-		}
-
-		private void OnMoveBack(string name, InputState state, float value)
-		{
-			if(state == InputState.Pressed)
-			{
-				_movement.Y = -1.0f;
-			}
-			else if(state == InputState.Released)
-			{
-				//The movement only needs to be stopped when the player is still moving back.
-				if(_movement.Y < 0.0f)
-				{
-					_movement.Y = 0.0f;
-				}
-			}
-		}
-
-		private void OnMoveRight(string name, InputState state, float value)
-		{
-			if(state == InputState.Pressed)
-			{
-				_movement.X = 1.0f;
-			}
-			else if(state == InputState.Released)
-			{
-				//The movement only needs to be stopped when the player is still moving right.
-				if(_movement.X > 0.0f)
-				{
-					_movement.X = 0.0f;
-				}
-			}
-		}
-
-		private void OnMoveLeft(string name, InputState state, float value)
-		{
-			if(state == InputState.Pressed)
-			{
-				_movement.X = -1.0f;
-			}
-			else if(state == InputState.Released)
-			{
-				//The movement only needs to be stopped when the player is still moving left.
-				if(_movement.X < 0.0f)
-				{
-					_movement.X = 0.0f;
-				}
-			}
-		}
-
-		private void OnMoveMouseX(string name, InputState state, float value)
-		{
-			//If for some reason another state than Changed is received, it will be ignored.
-			if(state != InputState.Changed)
-			{
-				return;
-			}
-
-			_rotationMovement.X += value;
-		}
-
-		private void OnMoveMouseY(string name, InputState state, float value)
-		{
-			//If for some reason another state than Changed is received, it will be ignored.
-			if(state != InputState.Changed)
-			{
-				return;
-			}
-
-			if(InverseVerticalRotation)
-			{
-				value = -value;
-			}
-
-			_rotationMovement.Y += value;
-		}
-
-		private void OnFireWeaponPressed(string name, InputState state, float value)
-		{
-			if(state != InputState.Pressed)
-			{
-				return;
-			}
-
-			var character = Entity.GetCharacter((int)GeometrySlots.ThirdPerson);
-			var weapon = Weapon;
-
-			if(weapon == null || character == null)
-			{
-				return;
-			}
-
-			var barrelOutAttachment = character.GetAttachment(weapon.OutAttachementName);
-
-			if(barrelOutAttachment == null)
-			{
-				return;
-			}
-
-
-			Vector3 position = barrelOutAttachment.WorldPosition;
-			Quaternion rotation = barrelOutAttachment.WorldRotation;
-			Weapon?.RequestFire(position, rotation);
-		}
-
-		private void OnAimWeaponPressed(string name, InputState state, float value)
-		{
-			switch(state)
-			{
-			case InputState.Down:
-			case InputState.Pressed:
-				IsAiming = true;
-				break;
-			case InputState.Released:
-				IsAiming = false;
-				break;
-			default:
-				return;
-			}
+			_playerActionHandler?.Dispose();
+			_playerActionHandler = new PlayerActionHandler();
 		}
 
 		protected override void OnUpdate(float frameTime)
 		{
 			base.OnUpdate(frameTime);
 
-			var cameraRotation = _playerView == null ? Camera.Rotation : _playerView.UpdateView(frameTime, _rotationMovement);
-			_rotationMovement = Vector2.Zero;
+			var cameraRotation = _playerView == null ? Camera.Rotation : _playerView.UpdateView(frameTime, RotationMovement);
+			RotationMovement = Vector2.Zero;
 			_animations?.UpdateAnimationState(frameTime, cameraRotation);
 
 			UpdateMovement(frameTime);
@@ -394,7 +211,7 @@ namespace CryEngine.Game
 				return;
 			}
 
-			var movement = new Vector3(_movement);
+			var movement = new Vector3(Movement);
 
 			//Transform the movement to camera-space
 			movement = Camera.TransformDirection(movement);
@@ -452,34 +269,7 @@ namespace CryEngine.Game
 
 		private void Physicalize()
 		{
-			// Physicalize the player as type Living.
-			// This physical entity type is specifically implemented for players
-			var parameters = new LivingPhysicalizeParams();
-
-			//The player will have settings for the player dimensions and dynamics.
-			var playerDimensions = parameters.PlayerDimensions;
-			var playerDynamics = parameters.PlayerDynamics;
-
-			parameters.Mass = Mass;
-
-			// Prefer usage of a capsule instead of a cylinder
-			playerDimensions.UseCapsule = true;
-
-			// Specify the size of our capsule
-			playerDimensions.ColliderSize = new Vector3(0.45f, 0.45f, EyeHeight * 0.25f);
-
-			// Keep pivot at the player's feet (defined in player geometry)
-			playerDimensions.PivotHeight = 0.0f;
-
-			// Offset collider upwards
-			playerDimensions.ColliderHeight = 1.0f;
-			playerDimensions.GroundContactEpsilon = 0.004f;
-
-			playerDynamics.AirControlCoefficient = 0.0f;
-			playerDynamics.AirResistance = AirResistance;
-			playerDynamics.Mass = Mass;
-
-			Entity.Physics.Physicalize(parameters);
+			new EntityPhysicsHelper().Physicalize(Entity, Mass, Height, AirResistance);
 		}
 	}
 }

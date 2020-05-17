@@ -4,11 +4,11 @@
     <PropertyGroup>
         <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
         <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-        <ProjectGuid>{E7E492CA-98AB-4451-A4B7-DE16AEF9B759}</ProjectGuid>
+        <ProjectGuid>{B104922C-85EA-4B36-98A9-D5D936BB8F2B}</ProjectGuid>
         <OutputType>Library</OutputType>
         <AppDesignerFolder>Properties</AppDesignerFolder>
         <RootNamespace>CultGame</RootNamespace>
-        <AssemblyName>Logic</AssemblyName>
+        <AssemblyName>Managers</AssemblyName>
         <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
         <FileAlignment>512</FileAlignment>
     </PropertyGroup>
@@ -47,11 +47,27 @@
         <Reference Include="System.Xml" />
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="Helpers\EntityPhysicsHelper.cs" />
-        <Compile Include="Helpers\LoggerHelper.cs" />
+        <Compile Include="Handlers\CameraHandler.cs" />
+        <Compile Include="Handlers\Control\CameraHandler.cs" />
+        <Compile Include="Handlers\Control\ControlEvents.cs" />
+        <Compile Include="Handlers\Control\MouseHandler.cs" />
+        <Compile Include="Handlers\Control\MouseVisibleHandler.cs" />
+        <Compile Include="Handlers\Monitoring\BuildVersionUiHandler.cs" />
+        <Compile Include="Handlers\Monitoring\CommonUiHandler.cs" />
+        <Compile Include="Handlers\Monitoring\FpsUiHandler.cs" />
+        <Compile Include="Handlers\Monitoring\IMonitoringUiHandler.cs" />
+        <Compile Include="Handlers\Units\CurrentUnitHandler.cs" />
+        <Compile Include="Managers\CameraManager.cs" />
+        <Compile Include="Managers\IManager.cs" />
+        <Compile Include="Managers\KeyControlManager.cs" />
+        <Compile Include="Managers\MonitoringManager.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>
     <ItemGroup>
+      <ProjectReference Include="..\Logic\Logic.csproj">
+        <Project>{e7e492ca-98ab-4451-a4b7-de16aef9b759}</Project>
+        <Name>Logic</Name>
+      </ProjectReference>
       <ProjectReference Include="..\Resources\Resources.csproj">
         <Project>{8302b5d5-97c7-4346-8e0c-e39b1d7c559e}</Project>
         <Name>Resources</Name>
